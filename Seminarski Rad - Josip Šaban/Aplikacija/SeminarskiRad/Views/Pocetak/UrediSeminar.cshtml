@@ -1,0 +1,79 @@
+﻿@model SeminarskiRad.Models.MojiModeli.Seminar
+
+@{
+    ViewBag.Title = "UrediSeminar";
+    Html.EnableUnobtrusiveJavaScript();
+    Html.EnableClientValidation();
+
+}
+
+<h2>Uredi Seminar</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Seminar</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdSeminar)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Naziv, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Naziv, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Naziv, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Opis, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Opis, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control", @Value = @Model.Datum.ToString("yyyy-MM-dd HH:mm") } })
+                @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="padding-left:3.2cm">
+            @Html.HiddenFor(model => model.Predavac)
+            @Html.LabelFor(model => model.Predavac)
+            &emsp; &ensp;
+            @ViewBag.ImePredavaca
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Popunjen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox" style="padding-left:0.6cm">
+                    @Html.EditorFor(model => model.Popunjen)
+                    @Html.ValidationMessageFor(model => model.Popunjen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding-left:2.2cm">
+            @Html.Label("Broj Polaznika") &emsp; &ensp; @ViewBag.BrojPolaznika
+
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Spremi" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+
+        <script src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+

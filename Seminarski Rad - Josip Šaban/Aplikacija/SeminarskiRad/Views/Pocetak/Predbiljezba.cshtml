@@ -1,0 +1,81 @@
+﻿@model IEnumerable<SeminarskiRad.Models.MojiModeli.Seminar>
+ 
+@{
+    ViewBag.Title = "Predbilježba";
+}
+<head>
+    <style>
+        table, th, tr, td {
+            border: 1px ridge;
+            height: 35px;
+            text-align: left;
+        }                
+        tr:hover{background-color:linen}
+    </style>
+</head>
+<div>
+    
+    @using (Html.BeginForm("Predbiljezba","Pocetak",FormMethod.Post))
+    {
+    <p style="margin-top:20px">
+        Pretraga:
+        @Html.TextBox("Pretraga")
+        <input type="submit" name="Pretraga" value="Pretraži" />
+    </p>
+
+    }
+
+</div>
+
+<wbr />
+
+<table class="table" >
+    <tr>
+        <th style="width:80px">
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th style="width:300px">
+            @Html.DisplayNameFor(model => model.Opis)
+        </th>
+        <th style="width:160px">
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Predavac)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td >
+                @Html.ActionLink("Odaberi", "UnosOsobnihPodataka", new { id = item.IdSeminar })
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+
+            @Html.HiddenFor(modelItem => item.Predavac)
+            @foreach (SeminarskiRad.Models.MojiModeli.Zaposlenik zaposlenik in ViewBag.ImenaPredavaca)
+            {
+                if (zaposlenik.IdZaposlenik == item.Predavac)
+                {
+                    <td>
+                        @zaposlenik.Ime @zaposlenik.Prezime
+                    </td>
+                }
+            }
+
+        </tr>
+    }
+
+</table>

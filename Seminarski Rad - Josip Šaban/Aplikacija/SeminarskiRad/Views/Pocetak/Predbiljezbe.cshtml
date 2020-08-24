@@ -1,0 +1,140 @@
+﻿@model IEnumerable<SeminarskiRad.Models.MojiModeli.Predbiljezba>
+<head>
+    <style>
+        table, th, tr, td {
+            border: 1px ridge;
+           height:35px;
+           text-align:center;
+        }
+        hover {
+                background-color: linen
+            }
+    </style>
+</head>
+@{
+    ViewBag.Title = "Predbilježbe";
+}
+
+
+
+@using (Html.BeginForm("Predbiljezbe", "Pocetak", FormMethod.Post))
+{
+    
+        <div>
+            <p style="margin-top:20px">
+                Pretraga:
+                @Html.TextBox("Pretraga")
+                <input type="submit" value="Pretraži" />
+            </p>           
+        </div>
+        <tr>          
+            <td>
+                @Html.Label("Neobrađene")
+                @Html.RadioButton("Filter", 0, true)/
+            </td>
+            <td>
+                @Html.Label("Prihvaćene")
+                @Html.RadioButton("Filter", 1)/
+            </td>
+            <td>
+                @Html.Label("Odbijene")
+                @Html.RadioButton("Filter", 2)/
+            </td>
+        </tr>
+
+
+        
+
+}
+<wbr />
+
+<table>
+    <tr >
+        <th style="width:80px">
+
+        </th>
+        <th style="width:200px">
+            @Html.DisplayNameFor(model => model.IdSeminar)
+        </th>
+        <th  style="width:80px">
+            @Html.DisplayNameFor(model => model.Ime)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Prezime)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Adresa)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Telefon)
+        </th>
+        <th style="width:100px">
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td >
+                @Html.ActionLink("Odaberi", "UrediPredbiljezbu", new { id = item.IdPredbiljezba }) 
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Seminar.Naziv)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Ime)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Prezime)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Telefon)
+            </td>
+            @{
+                if (item.Status == 0)
+                {
+                    <td>
+                        Neobrađen
+                    </td>
+                }
+                else if (item.Status == 1)
+                {
+                    <td>
+                        Prihvaćen
+                    </td>
+                }
+                else if (item.Status == 2)
+                {
+                    <td>
+                        Odbijen
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Nepravilan status
+                    </td>
+                }
+            }
+
+        </tr>
+    }
+
+</table>

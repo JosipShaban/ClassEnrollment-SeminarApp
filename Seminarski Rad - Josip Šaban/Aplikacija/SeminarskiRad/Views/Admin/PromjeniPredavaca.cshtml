@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SeminarskiRad.Models.MojiModeli.Zaposlenik>
+
+@{
+    ViewBag.Title = "PromjeniPredavaca";
+
+}
+    <head>
+        <style>
+            table, th, tr, td {
+                border: 1px ridge;
+                height: 30px;
+                text-align: center;
+            }
+
+                tr:hover {
+                    background-color: linen
+                }
+        </style>
+    </head>
+
+
+<table style="margin-top:25px">
+    <tr>
+        <th style="width:100px">
+
+        </th>
+        <th style="width:200px">
+            @Html.Label("Predavač")
+        </th>
+        
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Odaberi", "PromjenjenPredavac", new { id = item.IdZaposlenik }) |
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prezime)
+            @Html.DisplayFor(modelItem => item.Ime)
+        </td>
+    </tr>
+}
+
+</table>

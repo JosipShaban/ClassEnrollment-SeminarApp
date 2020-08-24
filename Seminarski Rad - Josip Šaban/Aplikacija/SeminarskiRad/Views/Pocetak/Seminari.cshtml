@@ -1,0 +1,111 @@
+﻿@model SeminarskiRad.Models.MojiModeli.SeminarIBrojPolaznikaViewModel
+
+@{
+    ViewBag.Title = "SeminariUViewModelu";
+}
+
+<head>
+    <style>
+        table, th, tr, td {
+            border: 1px ridge;
+            height: 30px;
+            text-align: center;
+        }
+
+        tr:hover {
+            background-color: linen
+        }
+    </style>
+</head>
+
+<div style="margin-top:20px">
+
+    @using (Html.BeginForm("Seminari", "Pocetak", FormMethod.Post))
+    {
+    <p>
+        Pretraga:
+
+        @Html.TextBox("Pretraga")
+        <input type="submit" name="Pretraga" value="Pretraži" />
+
+    </p>
+
+    }
+
+ </div>
+<wbr />
+
+<div style="margin-top:30px;margin-bottom:20px" >
+    
+    @Html.ActionLink("Novi", "StvoriSeminar", null, new {@class = "btn btn-primary"})
+</div>
+<wbr />
+
+<table class="table">
+    <tr>
+        <th style="width:250px">
+
+        </th>
+        <th>
+            Naziv
+        </th>
+        <th style="width:150px">
+            Predavač
+        </th>
+        <th>
+            Opis
+        </th>
+        <th style="width: 150px">
+            Datum
+        </th>
+        <th style="width:50px">
+            Popunjen
+        </th>
+        <th style="width:50px">
+            Broj Polaznika
+        </th>
+    </tr>
+
+    @foreach (SeminarskiRad.Models.MojiModeli.Seminar item in Model.SeminariUViewModelu)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Uredi", "UrediSeminar", new { id = item.IdSeminar }) |
+                @Html.ActionLink("Izbriši", "IzbrisiSeminar", new { id = item.IdSeminar }) |
+                @Html.ActionLink("Promjeni predavača", "PromjeniPredavaca", "Admin", new { id = item.IdSeminar }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            @foreach (SeminarskiRad.Models.MojiModeli.Zaposlenik JedanOdZaposlenika in Model.PredavaciUViewModelu)
+            {
+                if (JedanOdZaposlenika.IdZaposlenik == item.Predavac)
+                {
+                    <td>
+                        @JedanOdZaposlenika.Ime @JedanOdZaposlenika.Prezime
+                    </td>
+                }
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Popunjen)
+            </td>
+            @foreach (SeminarskiRad.Models.MojiModeli.BrojPolaznika JedanOdBrojevaPolaznika in Model.BrojPolaznikaUViewModelu)
+            {
+                if (JedanOdBrojevaPolaznika.IdSeminara == item.IdSeminar)
+                {
+                    <td>
+                        @JedanOdBrojevaPolaznika.BrojPolaznikaUKlasi
+                    </td>
+                }
+            }
+
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Označi ulogu";
+}
+
+<h2>Ovlasti Zaposlenika</h2>
+<wbr />
+
+@using (Html.BeginForm("AssignRole", "Admin", FormMethod.Post))
+{   <div>
+        @Html.Label("Uloge")
+        <wbr />
+        @Html.DropDownList("Role", ViewBag.Roles as SelectList)
+    </div>
+    <div>
+        @Html.Label("Korisnici")
+        <wbr />
+        @Html.DropDownList("UserName",ViewBag.UserNames as SelectList)
+
+    </div>
+    <wbr />
+    <input type="submit" value="Potvrdi" />
+    <div>
+        @ViewBag.AssignRole
+    </div>
+}
